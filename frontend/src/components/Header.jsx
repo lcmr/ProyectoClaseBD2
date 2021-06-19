@@ -1,5 +1,14 @@
 
+import fakeAuth from '../helpers/fakeAuth'
+// import history from '../../helpers/history'
+import { useHistory } from "react-router-dom";
 export default function Header(params) {
+    let history = useHistory();
+    const handleSignOut = () => {
+
+        fakeAuth.signout({})
+        history.push('/dashboard')
+    }
     return (
         <header className="p-3 bg-dark text-white">
             <div className="container">
@@ -9,13 +18,13 @@ export default function Header(params) {
                     </a>
 
                     <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <li><a href="#" className="nav-link px-2 text-secondary">Home</a></li>
-                        <li><a href="#" className="nav-link px-2 text-white">About</a></li>
+                        {/* <li><a href="#" className="nav-link px-2 text-secondary">Home</a></li> */}
+                        {/* <li><a href="#" className="nav-link px-2 text-white">About</a></li> */}
                     </ul>
 
                     <div className="text-end">
-                        <button type="button" className="btn btn-outline-light me-2">Login</button>
-                        <button type="button" className="btn btn-warning">Sign-up</button>
+                        <button type="button" onClick={handleSignOut} className="btn btn-outline-light me-2">Cerrar Sesion</button>
+                        {/* <button type="button" className="btn btn-warning">Sign-up</button> */}
                     </div>
                 </div>
             </div>
