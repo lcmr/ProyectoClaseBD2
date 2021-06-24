@@ -4,5 +4,5 @@ INSERT INTO `bases2`.`usuario`
 `password`)
 VALUES
 (
-'admin ',
+'admin',
 'password');
