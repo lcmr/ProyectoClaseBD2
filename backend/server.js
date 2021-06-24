@@ -19,7 +19,7 @@ const init = async() => {
                 relativeTo: path.join(__dirname, "static"),
             },
             cors: {
-                origin: ["http://localhost:3000"],
+                origin: ["http://localhost:5000"],
                 headers: ["Accept", "Content-Type"],
                 additionalHeaders: ["X-Requested-With"]
             }
@@ -74,7 +74,7 @@ const init = async() => {
             method: "GET",
             path: "/",
             handler: (request, h) => {
-                return h.file("welcome.html");
+                return h.response().type('application/json').code(401);
             },
             options: {
                 auth: {
@@ -152,9 +152,11 @@ const init = async() => {
                     request.cookieAuth.set({
                         valid: true
                     });
-                    return h.redirect("/welcome");
+                    return h.response().type('application/json');
+                    //return
+                    //return h.response("sesion iniciada").state('session', request.state.session);
                 } else {
-                    return h.redirect("/");
+                    return h.response().type('application/json').code(401);
                 }
             },
             options: {
