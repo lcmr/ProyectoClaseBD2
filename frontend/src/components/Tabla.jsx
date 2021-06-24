@@ -18,7 +18,7 @@ export default function Tabla({ data = {} }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {datasets.map(item => <ItemTabla data={item}></ItemTabla>)}
+                        {datasets.map((item)=> <ItemTabla data={item}></ItemTabla>)}
                     </tbody>
                 </table>
             </div>
@@ -34,7 +34,7 @@ export function ItemTabla({ data }) {
     return (
         <tr>
             <td>{label}</td>
-            {meses.map(item => <td>{item}</td>)}
+            {meses.map((item, index) => <td key={index}>{item}</td>)}
         </tr>
     )
 }

@@ -2,38 +2,30 @@ import { useState } from "react"
 import fakeAuth from '../../helpers/fakeAuth'
 // import history from '../../helpers/history'
 import { useHistory } from "react-router-dom";
-
-const styles = {
-    main: {
-        width: '200px',
-    }
-}
 function Login (){
     let history = useHistory();
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         if(email && password){
-            setLoading(true)
-            try {
-                const response = await fetch('http://localhost:5000/login',{
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({nombreUsuario: email, password})
-                })
-                console.log(response);
-            } catch (error) {
-                console.error(error)                
-            }
-            // fakeAuth.authenticate({})
-            // history.push('/dashboard')
+            // try {
+            //     const response = await fetch('http://localhost:5000/login',{
+            //         method: 'POST',
+            //         headers: {
+            //             Accept: 'application/json',
+            //             'Content-Type': 'application/json',
+            //         },
+            //         body: JSON.stringify({nombreUsuario: email, password})
+            //     })
+            //     console.log(response.headers);
+            // } catch (error) {
+            //     console.error(error)                
+            // }
+            fakeAuth.authenticate({})
+            history.push('/dashboard')
         }
     }
     return (
