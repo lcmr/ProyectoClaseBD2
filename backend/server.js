@@ -7,6 +7,9 @@ const Connection = require("./dbconfig");
 const DetalleFinanciero = require("./models/detalleFinanciero");
 const Bancos = require("./models/Banco");
 const { QueryTypes, Sequelize } = require("sequelize");
+var tratamientos = require("./handlers/preResponseHandler");
+
+
 
 
 const init = async() => {
@@ -81,6 +84,8 @@ const init = async() => {
                 const results = await con.query(
                     "select * from rankingBancos;", { type: QueryTypes.SELECT }
                 );
+                const bancos = await Bancos.findAll();
+                tratamientos.formateo(results, bancos);
                 return results;
             },
         },
