@@ -8,9 +8,7 @@ const DetalleFinanciero = require("./models/detalleFinanciero");
 const Bancos = require("./models/Banco");
 const { QueryTypes, Sequelize } = require("sequelize");
 var tratamientos = require("./handlers/preResponseHandler");
-
-
-
+const Usuarios = require("./models/usuario");
 
 const init = async() => {
     const server = Hapi.Server({
@@ -35,8 +33,30 @@ const init = async() => {
         {
             plugin: require("@hapi/vision"),
         },
+        {
+            plugin: require("@hapi/cookie"),
+        },
     ]);
 
+    server.auth.strategy("login", "cookie", {
+        cookie: {
+            name: "session",
+            password: "1cursodebasesdedatosdosjunio2021",
+            isSecure: false,
+        },
+        redirectTo: "/",
+        validateFunc: async(request, session) => {
+            if (
+                (session.valid)
+            ) {
+                return { valid: true };
+            } else {
+                return { valid: false };
+            }
+        },
+    });
+
+    server.auth.default("login");
     server.views({
         engines: {
             hbs: require("handlebars"),
@@ -50,6 +70,18 @@ const init = async() => {
             path: "/",
             handler: (request, h) => {
                 return h.file("welcome.html");
+            },
+            options: {
+                auth: {
+                    mode: "try",
+                },
+            },
+        },
+        {
+            method: "GET",
+            path: "/getUsers",
+            handler: async(request, h) => {
+                return await Usuarios.findAll();
             },
         },
         {
@@ -72,8 +104,8 @@ const init = async() => {
             method: "GET",
             path: "/getDetalleFinanciero",
             handler: async(request, h) => {
-                const detalleFinanciero = await DetalleFinanciero.findAll();
-                return detalleFinanciero;
+                const detalleFinancieros = await DetalleFinanciero.findAll();
+                return detalleFinancieros;
             },
         },
         {
@@ -81,9 +113,9 @@ const init = async() => {
             path: "/getRanking",
             handler: async(request, h) => {
                 const con = Connection.connect;
-                const results = await con.query(
-                    "select * from rankingBancos;", { type: QueryTypes.SELECT }
-                );
+                const results = await con.query("select * from rankingBancos;", {
+                    type: QueryTypes.SELECT,
+                });
                 const bancos = await Bancos.findAll();
                 tratamientos.formateo(results, bancos);
                 return results;
@@ -108,12 +140,47 @@ const init = async() => {
         {
             method: "POST",
             path: "/login",
+            handler: async(request, h) => {
+
+                const algo = await Usuarios.uno(request.payload.nombreUsuario, request.payload.password);
+                if (algo != null) {
+                    request.cookieAuth.set({
+                        valid: true
+                    });
+                    return h.redirect("/welcome");
+                } else {
+                    return h.redirect("/");
+                }
+            },
+            options: {
+                auth: {
+                    mode: "try",
+                },
+            },
+        },
+        {
+            method: "GET",
+            path: "/logout",
             handler: (request, h) => {
-                DetalleFinanciero.createUser(
-                    request.payload.username,
-                    request.payload.password
-                );
-                return h.view("index", { username: request.payload.username });
+                request.cookieAuth.clear();
+                return h.redirect("/");
+            },
+            options: {
+                auth: {
+                    mode: "try",
+                },
+            },
+        },
+        {
+            method: "GET",
+            path: "/welcome",
+            handler: (request, h) => {
+                return h.file("logged-in.html");
+            },
+            options: {
+                auth: {
+                    mode: "try",
+                },
             },
         },
         {
