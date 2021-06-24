@@ -6,6 +6,8 @@ const path = require("path");
 const Connection = require("./dbconfig");
 const DetalleFinanciero = require("./models/detalleFinanciero");
 const Bancos = require("./models/Banco");
+const { QueryTypes, Sequelize } = require("sequelize");
+
 
 const init = async() => {
     const server = Hapi.Server({
@@ -71,6 +73,18 @@ const init = async() => {
                 return detalleFinanciero;
             },
         },
+        {
+            method: "GET",
+            path: "/getRanking",
+            handler: async(request, h) => {
+                const con = Connection.connect;
+                const results = await con.query(
+                    "select * from rankingBancos;", { type: QueryTypes.SELECT }
+                );
+                return results;
+            },
+        },
+
         {
             method: "POST",
             path: "/postDetalleFinanciero",
