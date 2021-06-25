@@ -1,5 +1,6 @@
 import { useState } from "react"
 import axios from 'axios';
+import fakeAuth from "../../helpers/fakeAuth";
 
 // import history from '../../helpers/history'
 import { useHistory } from "react-router-dom";
@@ -12,36 +13,36 @@ function Login (){
     const handleSubmit = async (e) => {
         e.preventDefault()
         if(email && password){
-            try {
-                // const instance = axios.create({
-                //     baseURL: 'http://localhost:5000/',
-                //     timeout: 1000,
-                //     withCredentials: true,
-                //     credentials: 'same-origin',
-                //     mode: 'no-cors',
-                //     transformRequest: [(data) => JSON.stringify({nombreUsuario: email, password})],
-                //     headers: {
-                //         'Accept': 'application/json',
-                //         'Content-Type': 'application/json',
-                //     }
+            // try {
+            //     // const instance = axios.create({
+            //     //     baseURL: 'http://localhost:5000/',
+            //     //     timeout: 1000,
+            //     //     withCredentials: true,
+            //     //     credentials: 'same-origin',
+            //     //     mode: 'no-cors',
+            //     //     transformRequest: [(data) => JSON.stringify({nombreUsuario: email, password})],
+            //     //     headers: {
+            //     //         'Accept': 'application/json',
+            //     //         'Content-Type': 'application/json',
+            //     //     }
 
-                // });
-                // const response = await instance.post('login');
-                const response = await fetch('http://localhost:5000/login',{
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'same-origin',
-                    body: JSON.stringify({nombreUsuario: email, password})
-                })
-                console.log(response.headers);
-            } catch (error) {
-                console.error(error)                
-            }
-            // fakeAuth.authenticate({})
-            // history.push('/dashboard')
+            //     // });
+            //     // const response = await instance.post('login');
+            //     const response = await fetch('http://localhost:5000/login',{
+            //         method: 'POST',
+            //         headers: {
+            //             Accept: 'application/json',
+            //             'Content-Type': 'application/json',
+            //         },
+            //         credentials: 'same-origin',
+            //         body: JSON.stringify({nombreUsuario: email, password})
+            //     })
+            //     console.log(response.headers);
+            // } catch (error) {
+            //     console.error(error)                
+            // }
+            fakeAuth.authenticate({})
+            history.push('/dashboard')
         }
     }
     return (
