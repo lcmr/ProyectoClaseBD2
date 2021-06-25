@@ -19,9 +19,10 @@ const init = async() => {
                 relativeTo: path.join(__dirname, "static"),
             },
             cors: {
-                origin: ["http://localhost:5000"],
+                origin: ["http://localhost:3000"],
                 headers: ["Accept", "Content-Type"],
-                additionalHeaders: ["X-Requested-With"]
+                additionalHeaders: ["X-Requested-With"],
+                exposedHeaders: ['set-cookie']
             }
         },
     });
