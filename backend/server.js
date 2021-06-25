@@ -5,7 +5,7 @@ const Inert = require("@hapi/inert");
 const path = require("path");
 const Connection = require("./dbconfig");
 const DetalleFinanciero = require("./models/detalleFinanciero");
-const Bancos = require("./models/Banco");
+const Bancos = require("./models/banco");
 const { QueryTypes, Sequelize } = require("sequelize");
 var tratamientos = require("./handlers/preResponseHandler");
 const Usuarios = require("./models/usuario");
@@ -13,11 +13,16 @@ const Usuarios = require("./models/usuario");
 const init = async() => {
     const server = Hapi.Server({
         host: "localhost",
-        port: 3000,
+        port: 5000,
         routes: {
             files: {
                 relativeTo: path.join(__dirname, "static"),
             },
+            cors: {
+                origin: ["http://localhost:3000"],
+                headers: ["Accept", "Content-Type"],
+                additionalHeaders: ["X-Requested-With"]
+            }
         },
     });
 
