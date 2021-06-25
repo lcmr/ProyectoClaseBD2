@@ -74,7 +74,7 @@ const init = async() => {
             method: "GET",
             path: "/",
             handler: (request, h) => {
-                return h.file("welcome.html");
+                return h.response().type('application/json').code(401);
             },
             options: {
                 auth: {
@@ -156,7 +156,7 @@ const init = async() => {
                     //return
                     //return h.response("sesion iniciada").state('session', request.state.session);
                 } else {
-                    return h.response().code(401);
+                    return h.response().type('application/json').code(401);
                 }
             },
             options: {
