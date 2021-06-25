@@ -32,13 +32,8 @@ export default function Tabla({ data = {}, from = "2020-05", to = "2021-05" }) {
 export function ItemTabla({ data }) {
     return (
         <tr>
-<<<<<<< HEAD
-            <td>{label}</td>
-            {meses.map((item, index) => <td key={index}>{item}</td>)}
-=======
             <td>{data.label}</td>
             {data.data.map((item, index) => <td key={index}>{item}</td>)}
->>>>>>> develop
         </tr>
     )
 }
