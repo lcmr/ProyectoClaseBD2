@@ -1,5 +1,5 @@
 
-import { MESES } from "./Variables"
+import { MESES, COLORS } from "./Variables"
 
 const random = (length, from) => Math.floor(Math.random() * length + from)
 const numbers = (from, to) => {
@@ -86,6 +86,33 @@ const group_by = (key, list) => {
     return tt;
 }
 
+const get_clean_data = (body) => {
+    const tt = {}
+    body.forEach((item, index) => {
+        var jtem = tt[item.nombre];
+        if (!jtem) {
+            const color = COLORS[index];
+            jtem = { label: item.nombre, data: [], fecha: [], activo: [], borderColor: color, backgroundColor: color }
+            tt[item.nombre] = jtem;
+        }
+
+        // const fecha = new Date(item.fecha).toISOString().slice(0, 10);
+        const fecha = parse_date(item.fecha);
+        jtem["data"].push(item.posicion)
+        jtem["fecha"].push(fecha)
+        jtem["activo"].push(item.Activo)
+    });
+
+    const bancos = [];
+    for (const key in tt) {
+        if (Object.hasOwnProperty.call(tt, key)) {
+            const item = tt[key];
+            bancos.push(item)
+        }
+    }
+    return bancos;
+}
+
 export {
     generate_data, random, numbers,
     get_diff_in_months,
@@ -93,4 +120,5 @@ export {
     get_dataset_from_data,
     get_labels,
     group_by,
+    get_clean_data,
 }
