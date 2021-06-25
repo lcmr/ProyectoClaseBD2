@@ -1,23 +1,23 @@
+import { useState } from "react";
 import { useEffect, useRef } from "react"
+import { get_labels } from "../helpers/Generadores";
 
-import { MESES } from "../helpers/Variables"
-export default function Graph({ data }) {
+export default function Graph({ from = "2020-05", to = "2020-05", data = [] }) {
 
-    const { from = 0, to = 11, bancos: datasets = [] } = data
     const canvas_el = useRef(null)
-
+    const [chart, set_chart] = useState(null)
     const get_data = () => {
-        const labels = MESES.filter((item, index) => index >= from && index <= to);
         return {
-            labels,
-            datasets
+            labels: get_labels(from, to),
+            datasets: data
         };
     }
-
     const get_config = () => {
+        const data = get_data()
+        // console.log(data);
         return {
             type: 'line',
-            data: get_data(),
+            data,
             options: {
                 scales: {
                     y: {
@@ -41,9 +41,12 @@ export default function Graph({ data }) {
     }
 
     useEffect(() => {
-        console.log(data);
-        new window.Chart(canvas_el.current, get_config())
-    }, [])
+        if (chart) {
+            chart.destroy();
+        }
+        set_chart(new window.Chart(canvas_el.current, get_config()))
+    }, [data])
+
 
     return (
         <div className="graph">
