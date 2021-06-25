@@ -1,2 +1,5 @@
 export * from './Login'
 export * from './Dashboard'
+export * from './Carga'
+export * from './Tablas'
+export * from './Grafica'

@@ -7,7 +7,7 @@ const get_request = async (path) => {
     }
 }
 const get_ranking = () => {
-    return get_request("/getRanking")
+    return get_request("http://localhost:5000/getRanking")
 }
 
 export {

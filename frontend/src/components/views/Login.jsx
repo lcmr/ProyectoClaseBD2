@@ -1,39 +1,48 @@
 import { useState } from "react"
-import fakeAuth from '../../helpers/fakeAuth'
+import axios from 'axios';
+import fakeAuth from "../../helpers/fakeAuth";
+
 // import history from '../../helpers/history'
 import { useHistory } from "react-router-dom";
-
-const styles = {
-    main: {
-        width: '200px',
-    }
-}
 function Login (){
     let history = useHistory();
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         if(email && password){
-            setLoading(true)
-            try {
-                const response = await fetch('http://localhost:5000/login',{
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({nombreUsuario: email, password})
-                })
-                console.log(response);
-            } catch (error) {
-                console.error(error)                
-            }
-            // fakeAuth.authenticate({})
-            // history.push('/dashboard')
+            // try {
+            //     // const instance = axios.create({
+            //     //     baseURL: 'http://localhost:5000/',
+            //     //     timeout: 1000,
+            //     //     withCredentials: true,
+            //     //     credentials: 'same-origin',
+            //     //     mode: 'no-cors',
+            //     //     transformRequest: [(data) => JSON.stringify({nombreUsuario: email, password})],
+            //     //     headers: {
+            //     //         'Accept': 'application/json',
+            //     //         'Content-Type': 'application/json',
+            //     //     }
+
+            //     // });
+            //     // const response = await instance.post('login');
+            //     const response = await fetch('http://localhost:5000/login',{
+            //         method: 'POST',
+            //         headers: {
+            //             Accept: 'application/json',
+            //             'Content-Type': 'application/json',
+            //         },
+            //         credentials: 'same-origin',
+            //         body: JSON.stringify({nombreUsuario: email, password})
+            //     })
+            //     console.log(response.headers);
+            // } catch (error) {
+            //     console.error(error)                
+            // }
+            fakeAuth.authenticate({})
+            history.push('/dashboard')
         }
     }
     return (
@@ -46,16 +55,16 @@ function Login (){
                                 Iniciar Sesion
                             </div>
                             <div className="card-body">
-                                <form action="" className="" onSubmit={handleSubmit}>
+                                <form action="" className="" autoComplete="off" onSubmit={handleSubmit}>
                                     <div className="form-control">
                                         <label htmlFor="email">Email</label>
                                         <input name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" />
                                     </div>
                                     <div className="form-control">
                                         <label htmlFor="password">Password</label>
-                                        <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" />
+                                        <input autoComplete="off" type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" />
                                     </div>
-                                    <button className="btn btn-primary" type="submit">Iniciar Sesion</button>
+                                    <button autoComplete="off" className="btn btn-primary" type="submit">Iniciar Sesion</button>
                                 </form>
                             </div>
                         </div>
