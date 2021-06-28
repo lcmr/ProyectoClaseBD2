@@ -38,7 +38,11 @@ function Login (){
                     // credentials: 'same-origin',
                     body: JSON.stringify({nombreUsuario: email, password})
                 })
-                history.push('/dashboard')
+                if(response.status === 204){
+                    history.push('/dashboard')
+                }else{
+                    history.push('/')
+                }
                 // console.log(response.headers);
                 // history.push('/dashboard')
             } catch (error) {

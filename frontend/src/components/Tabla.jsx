@@ -1,7 +1,7 @@
 import { get_months, group_by } from "../helpers/Generadores"
 import { MESES } from "../helpers/Variables";
 
-export default function Tabla({ data = {}, from = "2020-05", to = "2021-05" }) {
+export default function Tabla({ data = {}, from = "2020-04", to = "2021-04" }) {
 
     const months = get_months(from, to);
     const years = group_by("year", months);
