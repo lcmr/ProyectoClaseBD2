@@ -1,6 +1,8 @@
 const get_request = async (path) => {
     try {
-        const res = await fetch(path)
+        const res = await fetch(path,{
+            credentials: 'include',
+        })
         return await res.json()
     } catch (error) {
         console.log(error)

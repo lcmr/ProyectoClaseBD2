@@ -4,10 +4,14 @@ import fakeAuth from '../helpers/fakeAuth'
 import { useHistory } from "react-router-dom";
 export default function Header(params) {
     let history = useHistory();
-    const handleSignOut = () => {
-
-        fakeAuth.signout({})
-        history.push('/dashboard')
+    const handleSignOut = async () => {
+        const response = await fetch('http://localhost:5000/logout',{
+                    method: 'GET',
+                    credentials: 'include',
+                    // credentials: 'same-origin',
+        })
+        // fakeAuth.signout({})
+        history.push('/')
     }
     return (
         <header className="p-3 bg-dark text-white">
