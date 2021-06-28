@@ -5,7 +5,7 @@ export const PrivateRoute = ({component: Component, ...rest}) => (
   <Route
     {...rest}
     render = { props => 
-      localStorage.getItem('token') ? 
+      document.cookie.indexOf('session=') ? 
       (
         <Component {...props} />
       ):(
